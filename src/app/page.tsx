@@ -56,7 +56,7 @@ const copy = {
     problem: "Masalah",
     solution: "Solusi",
     outcome: "Hasil",
-    footer: "© 2026 Ali Imran. Makassar, ID.",
+    footer: "© 2026 Muh. Ali Imran Abduh. Makassar, ID.",
     language: "EN",
   },
   en: {
