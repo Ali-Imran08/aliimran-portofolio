@@ -28,18 +28,34 @@ const copy = {
     kicker: "Mahasiswa Sistem Informasi. Developer web.",
     hero: (
       <>
-        Kode yang rapi.
+        Merancang alur.
         <br />
-        <i>Solusi</i> yang bekerja.
+        <i>Mewujudkan</i> pengalaman.
       </>
     ),
     projectsLink: "Lihat proyek pilihan",
     selected: "Karya terpilih",
     projectsTitle: "Sistem nyata, dari masalah hingga eksekusi.",
     projectsText:
-      "Setiap proyek dimulai dari alur kerja yang perlu dibuat lebih jelas, cepat, atau terhubung.",
+      "Eksplorasi aplikasi web fungsional dengan arsitektur rapi dan desain intuitif.",
+    viewProject: "Lihat proyek ↗",
     about: "Tentang saya",
-    bio: "Saya adalah mahasiswa Sistem Informasi dan developer yang berfokus pada pengembangan aplikasi web fungsional menggunakan Laravel, Vue.js, dan Tailwind CSS. Saya menyukai sistem yang rapi, pola arsitektur terstruktur, serta pengalaman pengguna yang intuitif tanpa ornamen tak perlu.",
+    bio: "Saya seorang Web Developer dan Mahasiswa Sistem Informasi yang berfokus pada pembangunan sistem web yang terstruktur, rapi, dan fungsional.",
+    aboutItems: [
+      {
+        label: "Pendekatan",
+        text: "Saya menyukai kode yang bersih, performa terjaga, dan pengalaman pengguna yang intuitif tanpa ornamen visual yang tidak perlu.",
+      },
+      {
+        label: "Tooling utama",
+        text: "Pengembangan sehari-hari berpusat pada Laravel, Vue.js, dan Tailwind CSS, didukung Linux/Pop!_OS serta Neovim.",
+      },
+      {
+        label: "Saat ini",
+        text: "Menempuh pendidikan di Universitas Hasanuddin sambil mengeksplorasi arsitektur sistem web dan proyek nyata.",
+      },
+    ],
+    aboutCta: "Terbuka untuk diskusi teknis, proyek freelance, atau kolaborasi pengembangan web.",
     stack: "Tech stack",
     pause: "Jeda gerak",
     play: "Lanjutkan gerak",
@@ -80,18 +96,34 @@ const copy = {
     kicker: "Information Systems student. Web developer.",
     hero: (
       <>
-        Clean code.
+        Shaping flows.
         <br />
-        <i>Working</i> solutions.
+        <i>Making</i> experiences.
       </>
     ),
     projectsLink: "View selected projects",
     selected: "Selected work",
     projectsTitle: "Real systems, from problem to execution.",
     projectsText:
-      "Each project starts with a workflow that needs to be clearer, faster, or better connected.",
+      "Functional web applications with considered architecture and intuitive design.",
+    viewProject: "View project ↗",
     about: "About me",
-    bio: "I am an Information Systems student and developer focused on functional web applications with Laravel, Vue.js, and Tailwind CSS. I value clean systems, structured architecture, and intuitive user experiences without unnecessary ornament.",
+    bio: "I am a Web Developer and Information Systems student focused on building web systems that are structured, clean, and functional.",
+    aboutItems: [
+      {
+        label: "Approach",
+        text: "I value clean code, reliable performance, and intuitive user experiences without unnecessary visual ornament.",
+      },
+      {
+        label: "Core tooling",
+        text: "My daily work centers on Laravel, Vue.js, and Tailwind CSS, supported by Linux/Pop!_OS and Neovim.",
+      },
+      {
+        label: "Currently",
+        text: "Studying at Hasanuddin University while exploring web-system architecture and real-world projects.",
+      },
+    ],
+    aboutCta: "Open to technical discussions, freelance projects, and web-development collaborations.",
     stack: "Tech stack",
     pause: "Pause motion",
     play: "Resume motion",
@@ -121,7 +153,10 @@ export default function Home() {
   const items = [...techStack, ...techStack];
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".reveal").forEach((element) => element.classList.add("is-revealed"));
+      return;
+    }
     const hero = document.querySelector<HTMLElement>(".hero");
     if (!hero) return;
     let frame = 0;
@@ -151,9 +186,19 @@ export default function Home() {
       if (!frame) frame = requestAnimationFrame(update);
     };
     update();
+    const revealObserver = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-revealed");
+        revealObserver.unobserve(entry.target);
+      }),
+      { threshold: 0.14 },
+    );
+    document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
+      revealObserver.disconnect();
       if (frame) cancelAnimationFrame(frame);
     };
   }, []);
@@ -166,7 +211,7 @@ export default function Home() {
           <span>ALI</span>
           <span>IMRAN</span>
         </div>
-        <nav className="hero-nav" aria-label="Main navigation">
+        <nav className="hero-nav reveal" aria-label="Main navigation">
           <div>
             <a className="wordmark" href="#home">
               ALI IMRAN
@@ -191,14 +236,10 @@ export default function Home() {
             </button>
           </div>
         </nav>
-        <div className="hero-split">
+        <div className="hero-split reveal reveal-late">
           <div className="hero-copy">
             <p className="kicker">{t.kicker}</p>
-            <h1 id="hero-title">
-              MEMBANGUN
-              <br />
-              <i>SISTEM DIGITAL.</i>
-            </h1>
+            <h1 id="hero-title">{t.hero}</h1>
             <a className="text-link" href="#projects">
               {t.projectsLink}
             </a>
@@ -227,16 +268,25 @@ export default function Home() {
         </div>
       </section>
       <section
-        className="about-statement"
+        className="about-statement reveal"
         id="about"
         aria-labelledby="about-title"
         data-parallax
       >
         <p className="eyebrow">{t.about}</p>
         <h2 id="about-title">{t.bio}</h2>
+        <div className="about-details">
+          {t.aboutItems.map((item) => (
+            <article className="about-detail" key={item.label}>
+              <p className="eyebrow">{item.label}</p>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+        <p className="about-cta">{t.aboutCta}</p>
       </section>
       <section
-        className="stack-marquee"
+        className="stack-marquee reveal"
         aria-labelledby="stack-title"
         data-parallax
       >
@@ -275,86 +325,45 @@ export default function Home() {
         </div>
       </section>
       <section
-        className="projects section"
+        className="projects section reveal"
         id="projects"
         aria-labelledby="projects-title"
         data-parallax
       >
-        <div className="section-intro">
-          <p className="eyebrow">{t.selected}</p>
-          <h2 id="projects-title">{t.projectsTitle}</h2>
+        <header className="projects-header">
+          <div>
+            <p className="eyebrow">{t.selected}</p>
+            <h2 id="projects-title">{t.projectsTitle}</h2>
+          </div>
           <p>{t.projectsText}</p>
-        </div>
-        <div className="project-list">
+        </header>
+        <div className="project-offset-grid">
           {projects.map((project) => (
-            <article className="project" key={project.number}>
+            <article className="project-offset-card" key={project.number}>
               <div
-                className={`project-media ${project.tone}`}
+                className={`project-offset-media ${project.tone}`}
                 aria-label={`${language === "id" ? "Visual proyek" : "Project visual"} ${project.title}`}
               >
-                <p>{project.number}</p>
-                <div className="project-mark" aria-hidden="true">
-                  {project.title.slice(0, 1)}
+                <div className="project-visual" aria-hidden="true">
+                  <span>{project.title.slice(0, 1)}</span>
                 </div>
+                <p>{project.number}</p>
                 <span>{project.role}</span>
               </div>
-              <div className="project-meta">
-                <div>
-                  <h3>{project.title}</h3>
-                  <dl>
-                    <div>
-                      <dt>{t.problem}</dt>
-                      <dd>
-                        {language === "id"
-                          ? project.problem
-                          : project.problemEn}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>{t.solution}</dt>
-                      <dd>
-                        {language === "id"
-                          ? project.solution
-                          : project.solutionEn}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>{t.outcome}</dt>
-                      <dd>
-                        {language === "id"
-                          ? project.outcome
-                          : project.outcomeEn}
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
-                <div className="project-side">
-                  <ul
-                    className="tags"
-                    aria-label={`Technology ${project.title}`}
-                  >
-                    {project.stack.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                  <div className="project-actions">
-                    <a href={project.github} target="_blank" rel="noreferrer">
-                      GitHub
-                    </a>
-                    {project.demo && (
-                      <a href={project.demo} target="_blank" rel="noreferrer">
-                        Demo
-                      </a>
-                    )}
-                  </div>
-                </div>
+              <div className="project-offset-content">
+                <p className="project-stack">{project.stack.join(" · ")}</p>
+                <h3>{project.title}</h3>
+                <p>{language === "id" ? project.summary : project.summaryEn}</p>
+                <a href={project.demo ?? project.github} target="_blank" rel="noreferrer">
+                  {t.viewProject}
+                </a>
               </div>
             </article>
           ))}
         </div>
       </section>
       <section
-        className="contact"
+        className="contact reveal"
         id="contact"
         aria-labelledby="contact-title"
         data-parallax

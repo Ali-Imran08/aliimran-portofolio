@@ -8,6 +8,8 @@ export type Project = {
   solutionEn: string;
   outcome: string;
   outcomeEn: string;
+  summary: string;
+  summaryEn: string;
   stack: string[];
   github: string;
   demo?: string;
@@ -23,7 +25,9 @@ export const projects: Project[] = [
     solutionEn: "A Laravel restaurant management app with the Repository Pattern, QR ordering, employee clock-ins, automated payroll calculation, and a cashier dashboard.",
     outcome: "Efisiensi alur pemesanan meja dan transparansi perhitungan jam kerja karyawan.",
     outcomeEn: "A more efficient table-ordering flow and clearer employee work-hour calculations.",
-    stack: ["Laravel", "MySQL", "Tailwind CSS", "JavaScript"], github: "https://github.com/username/seroeni-restaurant", demo: "https://demo.seroeni.com", tone: "restaurant",
+    summary: "Sistem manajemen restoran terintegrasi untuk pesanan QR, absensi, dan kalkulasi gaji otomatis.",
+    summaryEn: "An integrated restaurant-management system for QR ordering, attendance, and automated payroll.",
+    stack: ["Laravel", "Repository Pattern", "Vue.js"], github: "https://github.com/username/seroeni-restaurant", demo: "https://demo.seroeni.com", tone: "restaurant",
   },
   {
     number: "02", title: "e-Surat Warga Portal", role: "Web Developer",
@@ -33,7 +37,9 @@ export const projects: Project[] = [
     solutionEn: "A resident-letter administration portal with the Fonnte WhatsApp API, real-time status notifications, automated scheduling, and official PDF generation.",
     outcome: "Waktu pemrosesan dokumen warga menjadi lebih cepat dan terkoordinasi secara digital.",
     outcomeEn: "Faster document processing with better digital coordination for residents.",
-    stack: ["Laravel", "Fonnte API", "DomPDF", "Tailwind CSS"], github: "https://github.com/username/e-surat-warga", tone: "civic",
+    summary: "Portal administrasi warga dengan notifikasi WhatsApp, surat PDF, dan manajemen dokumen.",
+    summaryEn: "A resident administration portal with WhatsApp notifications, PDF letters, and document management.",
+    stack: ["Laravel", "Fonnte API", "Tailwind"], github: "https://github.com/username/e-surat-warga", tone: "civic",
   },
   {
     number: "03", title: "Interactive Developer Portfolio", role: "Frontend Developer & Designer",
@@ -43,7 +49,21 @@ export const projects: Project[] = [
     solutionEn: "A dark editorial portfolio using Vue 3, Tailwind CSS, and interactive motion to present work cinematically.",
     outcome: "Pengalaman penjelajahan yang cepat, responsif, dan bernilai estetika tinggi.",
     outcomeEn: "A fast, responsive, and visually considered browsing experience.",
-    stack: ["Vue.js 3", "Tailwind CSS", "GSAP / Framer Motion"], github: "https://github.com/username/portfolio", demo: "https://aliimran.dev", tone: "portfolio",
+    summary: "Portofolio dark editorial dengan gerak halus, layout responsif, dan penekanan pada karya.",
+    summaryEn: "A dark editorial portfolio with restrained motion, responsive layouts, and work-first presentation.",
+    stack: ["Vue.js 3", "Tailwind CSS", "GSAP"], github: "https://github.com/username/portfolio", demo: "https://aliimran.dev", tone: "portfolio",
+  },
+  {
+    number: "04", title: "Gesture Blur (Foto-Kita-Blur)", role: "Computer Vision Developer",
+    problem: "Penerapan efek visual real-time melalui kontrol gestur tangan membutuhkan deteksi yang responsif dan stabil.",
+    problemEn: "Real-time visual effects controlled by hand gestures require responsive and stable detection.",
+    solution: "Aplikasi pemrosesan citra yang mendeteksi gestur tangan lalu menerapkan filter blur secara langsung.",
+    solutionEn: "An image-processing app that detects hand gestures and applies a blur filter in real time.",
+    outcome: "Interaksi tanpa sentuh yang ringan untuk eksplorasi pemrosesan citra berbasis kamera.",
+    outcomeEn: "A lightweight touchless interaction for exploring camera-based image processing.",
+    summary: "Aplikasi pemrosesan citra real-time untuk mendeteksi gestur tangan dan menerapkan efek blur otomatis.",
+    summaryEn: "A real-time image-processing app for hand-gesture detection and automatic blur effects.",
+    stack: ["Python", "OpenCV", "MediaPipe"], github: "https://github.com/username/foto-kita-blur", tone: "vision",
   },
 ];
 

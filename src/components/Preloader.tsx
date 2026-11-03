@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 export default function Preloader() {
   const [show, setShow] = useState(false);
-  const [fade, setFade] = useState(false);
+  const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
     // ponytail: setShow sync dalam effect, tapi cuma client-side render via dynamic import
@@ -11,14 +11,14 @@ export default function Preloader() {
     setShow(true);
     document.body.style.overflow = 'hidden';
 
-    const fadeTimer = setTimeout(() => setFade(true), 2200);
+    const leaveTimer = setTimeout(() => setLeaving(true), 2200);
     const hideTimer = setTimeout(() => {
       setShow(false);
       document.body.style.overflow = '';
-    }, 2800);
+    }, 3100);
 
     return () => {
-      clearTimeout(fadeTimer);
+      clearTimeout(leaveTimer);
       clearTimeout(hideTimer);
       document.body.style.overflow = '';
     };
@@ -28,7 +28,7 @@ export default function Preloader() {
 
   return (
     <div 
-      className={`preloader ${fade ? 'preloader-fade' : ''}`}
+      className={`preloader ${leaving ? 'preloader-leave' : ''}`}
       aria-hidden="true"
     >
       <div className="preloader-content">
